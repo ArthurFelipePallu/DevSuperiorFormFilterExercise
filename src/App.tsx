@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Home from "./Routes";
+import { useState } from "react";
+import HomeBody from "./Routes/HomeBody";
+import FormFilter from "./Routes/FormFilter";
+import { ProductCountProvider } from "./Utils/context-product";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
+  const [contextProductCount,setContextProductCount] = useState<number>(0);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ProductCountProvider.Provider value={{contextProductCount,setContextProductCount}}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route index element={<HomeBody />} />
+            <Route path="formfilter" element={<FormFilter />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </ProductCountProvider.Provider>
+  );
 }
-
-export default App

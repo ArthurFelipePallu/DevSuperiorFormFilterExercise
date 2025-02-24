@@ -1,0 +1,6 @@
+
+
+.form-filter-header{
+    background-color: var(--formfilter-bg-secondary);
+    color: var(--formfilter-font-primary);
+}
