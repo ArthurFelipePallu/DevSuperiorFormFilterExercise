@@ -1,16 +1,17 @@
 :root {
-  --formfilter-color-bg-primary: #ffffff;
-  --formfilter-bg-secondary: #55bc04;
+  --formfilter-color-bg-primary: #c2c2c2;
+  --formfilter-color-bg-secondary: #55bc04;
+  --formfilter-color-bg-tertiary: #fff;
 
-  --formfilter-card-bg: #fff;
-  --formfilter-card-border: #55bc04;
+  --formfilter-color-border-primary: #c2c2c2;
+  --formfilter-color-border-secondary: #55bc04;
 
-  --formfilter-btn-primary: #55bc04;
+  --formfilter-color-btn-primary: #55bc04;
 
-  --formfilter-font-primary: #ffffff;
-  --formfilter-font-secondary: #c2c2c2;
-  --formfilter-font-tertiary: #55bc04;
-  --formfilter-font-quaternary: #6f6f6f;
+  --formfilter-color-font-primary: #ffffff;
+  --formfilter-color-font-secondary: #c2c2c2;
+  --formfilter-color-font-tertiary: #55bc04;
+  --formfilter-color-font-quaternary: #6f6f6f;
 }
 a,a:hover /* afeta links e quando eles estão com mouse por cima deles*/ {
   text-decoration: none; /* tira a decoração do texto , retornando a uma aparência normal*/
@@ -27,6 +28,7 @@ link{
   font-family: "Open Sans";
 }
 
+/*------------------------------------------ */
 header {
   height: 70px;
   display: flex;
@@ -40,12 +42,21 @@ header {
   margin: 0 auto;
 }
 nav {
-  display: flex;
   justify-content: space-between;
+}
+/*------------------------------------------ */
+
+
+.formfilter-vertical-align-center{
+  display: flex;
   align-items: center;
+
 }
 
 
+
+
+/*------------------------------------------ */
 
 @media (prefers-color-scheme: light) {
   :root {
