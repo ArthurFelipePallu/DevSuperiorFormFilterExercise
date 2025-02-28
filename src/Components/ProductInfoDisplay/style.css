@@ -1,0 +1,29 @@
+
+
+.info-display-container{
+    width: 920px;
+    height: 53px;
+    margin-top: 10px;
+
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: var(--formfilter-color-border-secondary);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-left: 15px;
+
+}
+.product-name{
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--formfilter-color-font-quaternary);
+}
+.product-price{
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--formfilter-color-font-tertiary);
+}
