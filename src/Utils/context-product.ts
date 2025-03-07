@@ -16,12 +16,3 @@ export type PriceRange ={
     maxValue?:number;
     possible:boolean;
 }
-export type ProductPriceRangeType ={
-    contextPriceRange : PriceRange;
-    setContextPriceRange: (contextPriceRangeMin:PriceRange) =>void;
-}
-
-export const ProductPriceRangeProvider = createContext<ProductPriceRangeType>({
-    contextPriceRange:{minValue:0,maxValue:0,possible:false},
-    setContextPriceRange: () => {}
-});

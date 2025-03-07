@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import "./styler.css";
+import { useContext } from "react";
 import { ProductCountProvider } from "../../../Utils/context-product";
 
 export default function ProductCounter() {

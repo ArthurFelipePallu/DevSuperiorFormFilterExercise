@@ -17,7 +17,7 @@ export default function Header() {
     <>
       <header className="form-filter-header ">
         <nav className="form-filter-container formfilter-vertical-align-center">
-          <Link to="/" onClick={handleClick}>
+          <Link to="/formfilter" onClick={handleClick}>
             <h2>DSFilter</h2>
           </Link>
           <ProductCounter />

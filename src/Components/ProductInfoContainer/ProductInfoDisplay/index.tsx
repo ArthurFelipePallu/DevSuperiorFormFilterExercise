@@ -1,8 +1,8 @@
-import { CompleteProductDTO } from "../../../Models/product";
+import { ProductDTO } from "../../../Models/product";
 import "./style.css";
 
 type Props ={
-    product : CompleteProductDTO;
+    product : ProductDTO;
 }
 
 export default function ProductInfoDisplay( { product } : Props ) { 

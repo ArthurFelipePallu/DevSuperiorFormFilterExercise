@@ -1,36 +1,37 @@
 import "./styles.css";
 import { useContext, useState } from "react";
+import { ProductDTO } from "../../Models/product";
+import ProductInfoContainer from "../ProductInfoContainer"; 
+import * as ProductService from "../../Services/product-service";
+import { PriceRange, ProductCountProvider } from "../../Utils/context-product";
 import FormErrorMessage from "../../Components/MinMaxValueForm/FormErrorMessage";
-import github_icon from "../../assets/github-icon.png";
-import sprint_tool_icon from "../../assets/spring-tool-icon.png";
-import * as UserService from "../../Services/user-localStorage-service"
-
 import {
-  GIT_NAME,
   INVALID_MAX_VALUE_WARNING_MESSAGE,
   INVALID_MIN_VALUE_WARNING_MESSAGE,
-  MIN_VALUE_IS_GREATER_THAN_MAX_VALUE_ERROR_MESSAGE,
 } from "../../Utils/system";
-import {
-  PriceRange,
-  ProductPriceRangeProvider,
-} from "../../Utils/context-product";
 
 export default function MinMaxValueForm() {
-  const { contextPriceRange, setContextPriceRange } = useContext(
-    ProductPriceRangeProvider
-  );
+  const { setContextProductCount } = useContext(ProductCountProvider);
 
   const [formData, setFormData] = useState<PriceRange>({ possible: true });
   const [minValueDefined, setMinValueDefined] = useState(false);
   const [maxValueDefined, setMaxValueDefined] = useState(false);
-  const userInfo = UserService.GetUserInfo();
+  const [productList, setProductList] = useState<ProductDTO[]>([]);
 
   function handleSubmit(event: any) {
     event.preventDefault();
     handleInputErrors();
-    setContextPriceRange(formData);
-    UpdateFormFilter();
+    OnFilter(formData.minValue!, formData.maxValue!);
+  }
+
+  function OnFilter(min: number, max: number) {
+    const filteredData = ProductService.findByPrice(min || 0, max || 0);
+    setFilteredData(filteredData);
+  }
+
+  function setFilteredData(data: ProductDTO[]) {
+    setContextProductCount(data.length);
+    setProductList(data);
   }
 
   function handleInputErrors() {
@@ -49,11 +50,6 @@ export default function MinMaxValueForm() {
       formData.maxValue = Number.MAX_VALUE;
     }
   }
-
-  function UpdateFormFilter() {
-    setContextPriceRange(formData);
-  }
-
   function isMinValueUndefined() {
     const minDefined = formData.minValue === undefined;
     setMinValueDefined(minDefined);
@@ -87,12 +83,6 @@ export default function MinMaxValueForm() {
     if (value == "") value = undefined;
     const name = event.target.name;
     setFormData({ ...formData, [name]: value });
-  }
-
-  function getRepositoryImage():string{
-    if(userInfo.repository == GIT_NAME)
-      return github_icon;
-    return sprint_tool_icon;
   }
 
   return (
@@ -135,17 +125,11 @@ export default function MinMaxValueForm() {
               >
                 Filtrar
               </button>
-              <FormErrorMessage
-                errorOcurred={!contextPriceRange.possible}
-                errorMessage={MIN_VALUE_IS_GREATER_THAN_MAX_VALUE_ERROR_MESSAGE}
-              />
             </div>
           </form>
         </div>
-        <div className="form-filter-repo-img-container">
-          <img src={getRepositoryImage()} />
-        </div>
       </div>
+      <ProductInfoContainer filteredProductList={productList} />
     </div>
   );
 }
