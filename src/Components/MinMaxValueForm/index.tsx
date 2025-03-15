@@ -1,37 +1,25 @@
 import "./styles.css";
-import { useContext, useState } from "react";
-import { ProductDTO } from "../../Models/product";
-import ProductInfoContainer from "../ProductInfoContainer"; 
-import * as ProductService from "../../Services/product-service";
-import { PriceRange, ProductCountProvider } from "../../Utils/context-product";
+import { useState } from "react";
+import { PriceRange } from "../../Utils/context-product";
 import FormErrorMessage from "../../Components/MinMaxValueForm/FormErrorMessage";
 import {
   INVALID_MAX_VALUE_WARNING_MESSAGE,
   INVALID_MIN_VALUE_WARNING_MESSAGE,
 } from "../../Utils/system";
 
-export default function MinMaxValueForm() {
-  const { setContextProductCount } = useContext(ProductCountProvider);
+type Props = {
+  onFilter: Function;
+};
 
+export default function MinMaxValueForm({ onFilter }: Props) {
   const [formData, setFormData] = useState<PriceRange>({ possible: true });
   const [minValueDefined, setMinValueDefined] = useState(false);
   const [maxValueDefined, setMaxValueDefined] = useState(false);
-  const [productList, setProductList] = useState<ProductDTO[]>([]);
 
   function handleSubmit(event: any) {
     event.preventDefault();
     handleInputErrors();
-    OnFilter(formData.minValue!, formData.maxValue!);
-  }
-
-  function OnFilter(min: number, max: number) {
-    const filteredData = ProductService.findByPrice(min || 0, max || 0);
-    setFilteredData(filteredData);
-  }
-
-  function setFilteredData(data: ProductDTO[]) {
-    setContextProductCount(data.length);
-    setProductList(data);
+    onFilter(formData.minValue!, formData.maxValue!);
   }
 
   function handleInputErrors() {
@@ -129,7 +117,6 @@ export default function MinMaxValueForm() {
           </form>
         </div>
       </div>
-      <ProductInfoContainer filteredProductList={productList} />
     </div>
   );
 }
